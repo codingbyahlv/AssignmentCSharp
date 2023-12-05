@@ -1,2 +1,5 @@
-﻿// See https://aka.ms/new-console-template for more information
-Console.WriteLine("Hello, World!");
+﻿using ConsoleApp.Interfaces;
+using ConsoleApp.Services;
+
+IMenuService menuService = new MenuService();
+menuService.ShowMainMenu();
