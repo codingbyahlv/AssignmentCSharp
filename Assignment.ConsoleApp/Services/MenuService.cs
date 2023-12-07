@@ -1,10 +1,8 @@
-﻿
+﻿using Assignment.ConsoleApp.Interfaces;
 
-using ConsoleApp.Interfaces;
+namespace Assignment.ConsoleApp.Services;
 
-namespace ConsoleApp.Services;
-
-public class MenuService:IMenuService
+public class MenuService : IMenuService
 {
     public void ShowMainMenu()
     {
@@ -41,7 +39,7 @@ public class MenuService:IMenuService
 
             Console.ReadKey();
 
-        } while (isMenu);  
+        } while (isMenu);
     }
 
     //method: show all contacts
@@ -94,5 +92,4 @@ public class MenuService:IMenuService
         Console.WriteLine($"\nEndast {message} är giltiga val");
         ReturnToMainMenu();
     }
-
 }

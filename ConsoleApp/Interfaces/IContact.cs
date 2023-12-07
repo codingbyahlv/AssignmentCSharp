@@ -1,6 +1,6 @@
 ﻿namespace ConsoleApp.Interfaces;
 
-public interface IPerson
+public interface IContact
 {
     string FirstName { get; set; }
     string LastName { get; set; } 

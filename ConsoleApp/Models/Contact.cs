@@ -3,7 +3,7 @@ using ConsoleApp.Interfaces;
 
 namespace ConsoleApp.Models;
 
-public class Person : IPerson
+public class Contact : IContact
 {
     public string FirstName { get; set; } = null!;
     public string LastName { get; set; } = null!;

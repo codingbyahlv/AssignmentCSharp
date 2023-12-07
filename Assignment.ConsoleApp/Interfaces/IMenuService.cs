@@ -1,6 +1,4 @@
-﻿
-
-namespace ConsoleApp.Interfaces;
+﻿namespace Assignment.ConsoleApp.Interfaces;
 
 public interface IMenuService
 {
