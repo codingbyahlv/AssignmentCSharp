@@ -7,13 +7,12 @@ namespace Assignment.Shared.Respository;
 
 public class ContactRespository : IContactRepository
 {
-    //instantiate: the reusable list
+    //instantiate: the reusable list and fileService
     private List<IContactModel> _contactList = [];
-    //instantiate: the fileService for saving content to file
     private readonly FileService _fileService =  new();
 
 
-    //method: CREATE person to list
+    //method: CREATE contact to list
     public bool AddContactToList(IContactModel contact)
     {
         try
@@ -69,28 +68,59 @@ public class ContactRespository : IContactRepository
         return null!;
     }
 
+
     //method: UPDATE one contact - based on firstname
-    public IContactModel UpdateOneCOntact(Func<IContactModel, bool> predicate)
+    public bool UpdateOneContact(Func<IContactModel, bool> predicate, IContactModel updatedContact)
     {
         try
         {
             IContactModel contact = _contactList.FirstOrDefault(predicate)!;
-            //SKRIV IN FNKTIONALITET FÖR ATT UPPDATERA
-            return contact;
+
+            if(contact != null)
+            {
+                contact.FirstName = updatedContact.FirstName;
+                contact.LastName = updatedContact.LastName; 
+                contact.PhoneNumber = updatedContact.PhoneNumber;
+                contact.Email = updatedContact.Email;
+                contact.Address = updatedContact.Address;
+                contact.ZipCode = updatedContact.ZipCode;
+                contact.City = updatedContact.City;
+            }
+
+            string jsonContent = JsonConvert.SerializeObject(_contactList, new JsonSerializerSettings
+            {
+                TypeNameHandling = TypeNameHandling.All,
+                Formatting = Formatting.Indented
+            });
+
+            bool result = _fileService.SaveContactListToFile(jsonContent);
+
+            return result;
         }
         catch (Exception ex) { Debug.WriteLine(ex.Message); }
-        return null!;
+        return false;
     }
 
-
+ 
     //method: DELETE one contact - based on e-mail
-    public bool DeleteContact(Func<IContactModel, bool> predicate)
+    public bool DeleteOneContact(Func<IContactModel, bool> predicate)
     {
         try
         {
             IContactModel contact = _contactList.FirstOrDefault(predicate)!;
-            //SKRIV IN FNKTIONALITET FÖR ATT RADERA BASERAT PÅ EMAIL
-            return true;
+            
+            _contactList.Remove(contact);
+
+            string jsonContent = JsonConvert.SerializeObject(_contactList, new JsonSerializerSettings
+            {
+                TypeNameHandling = TypeNameHandling.All,
+                Formatting = Formatting.Indented
+            });
+
+            bool result = _fileService.SaveContactListToFile(jsonContent);
+
+            return result;
+
         }
         catch (Exception ex) { Debug.WriteLine(ex.Message); }
         return false;

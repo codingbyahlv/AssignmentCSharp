@@ -74,6 +74,7 @@ public class MenuService(ContactMenuService contactMenuService)
     //method: print a wrong choice message - DONE!
     public void ShowErrorMessage(string message)
     {
+        Console.Clear();
         Console.WriteLine($"\nEndast {message} är giltiga val");
         ReturnToMainMenu();
     }
