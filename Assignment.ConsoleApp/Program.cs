@@ -1,5 +1,20 @@
-﻿using Assignment.ConsoleApp.Interfaces;
-using Assignment.ConsoleApp.Services;
+﻿using Assignment.ConsoleApp.Services;
+using Assignment.Shared.Respository;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 
-IMenuService menuService = new MenuService();
-menuService.ShowMainMenu();
+
+IHost builder = Host.CreateDefaultBuilder().ConfigureServices(services =>
+{
+    services.AddSingleton<ContactRespository>();
+    services.AddSingleton<MenuService>();
+    services.AddSingleton<ContactMenuService>();
+
+}).Build();
+
+builder.Start();
+Console.Clear();
+
+MenuService mainMenuService = builder.Services.GetRequiredService<MenuService>();
+mainMenuService.ShowMainMenu();
+

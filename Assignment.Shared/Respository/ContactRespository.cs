@@ -1,12 +1,16 @@
 ﻿using Assignment.Shared.Interfaces;
+using Assignment.Shared.Services;
 using System.Diagnostics;
+using Newtonsoft.Json;
 
 namespace Assignment.Shared.Respository;
 
-internal class ContactRespository : IContactRepository
+public class ContactRespository : IContactRepository
 {
     //instantiate: the reusable list
-    private List<IContactModel> _contactList = new List<IContactModel>();
+    private List<IContactModel> _contactList = [];
+    //instantiate: the fileService for saving content to file
+    private readonly FileService _fileService =  new();
 
 
     //method: CREATE person to list
@@ -14,8 +18,17 @@ internal class ContactRespository : IContactRepository
     {
         try
         {
-            //SKRIV IN FUNKTIONALITET FÖR ATT LÄGGA TILL
-            return true;
+            _contactList.Add(contact);
+            
+            string jsonContent = JsonConvert.SerializeObject(_contactList, new JsonSerializerSettings 
+            { 
+                TypeNameHandling = TypeNameHandling.All, 
+                Formatting = Formatting.Indented
+            });
+
+            bool result = _fileService.SaveContactListToFile(jsonContent);
+
+            return result;
         }
         catch (Exception ex) { Debug.WriteLine(ex.Message); }
         return false;
@@ -25,7 +38,20 @@ internal class ContactRespository : IContactRepository
     //method: READ all contacts
     public IEnumerable<IContactModel> GetAllContacts()
     {
-        //SKRIV IN FUNKTIONALITET
+        try
+        {
+            string content = _fileService.GetContactListFromFile();
+
+            if (!string.IsNullOrEmpty(content))
+            {
+                _contactList = JsonConvert.DeserializeObject<List<IContactModel>>(content, new JsonSerializerSettings 
+                { 
+                    TypeNameHandling = TypeNameHandling.All, 
+                    Formatting = Formatting.Indented 
+                })!;
+            }
+        }
+        catch (Exception ex) { Debug.WriteLine(ex.Message); }
         return _contactList;
     }
 
@@ -34,6 +60,7 @@ internal class ContactRespository : IContactRepository
     public IContactModel GetOneContact(Func<IContactModel, bool> predicate)
     {
         IContactModel contact = _contactList.FirstOrDefault(predicate)!;
+
         if (contact != null)
         {
             return contact;
@@ -42,13 +69,26 @@ internal class ContactRespository : IContactRepository
         return null!;
     }
 
-
-
-    //method: DELETE one contact - based on e-mail
-    public bool DeleteContact(string Email)
+    //method: UPDATE one contact - based on firstname
+    public IContactModel UpdateOneCOntact(Func<IContactModel, bool> predicate)
     {
         try
         {
+            IContactModel contact = _contactList.FirstOrDefault(predicate)!;
+            //SKRIV IN FNKTIONALITET FÖR ATT UPPDATERA
+            return contact;
+        }
+        catch (Exception ex) { Debug.WriteLine(ex.Message); }
+        return null!;
+    }
+
+
+    //method: DELETE one contact - based on e-mail
+    public bool DeleteContact(Func<IContactModel, bool> predicate)
+    {
+        try
+        {
+            IContactModel contact = _contactList.FirstOrDefault(predicate)!;
             //SKRIV IN FNKTIONALITET FÖR ATT RADERA BASERAT PÅ EMAIL
             return true;
         }

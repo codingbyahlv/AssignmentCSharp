@@ -1,9 +1,10 @@
-﻿using Assignment.ConsoleApp.Interfaces;
+﻿namespace Assignment.ConsoleApp.Services;
 
-namespace Assignment.ConsoleApp.Services;
-
-public class MenuService : IMenuService
+public class MenuService(ContactMenuService contactMenuService) 
 {
+    private readonly ContactMenuService _contactMenuService = contactMenuService;
+
+    //method: the main menu of the program - DONE!
     public void ShowMainMenu()
     {
         bool isMenu = true;
@@ -24,10 +25,10 @@ public class MenuService : IMenuService
             switch (option)
             {
                 case "1":
-                    ShowAllContacts();
+                    _contactMenuService.ShowAllContacts();
                     break;
                 case "2":
-                    AddNewContact();
+                    _contactMenuService.AddNewContact();
                     break;
                 case "3":
                     ExitProgram();
@@ -40,22 +41,6 @@ public class MenuService : IMenuService
             Console.ReadKey();
 
         } while (isMenu);
-    }
-
-    //method: show all contacts
-    private void ShowAllContacts()
-    {
-        Console.Clear();
-        //BYT TILL KALLA PÅ SHOW SERVICE
-        Console.WriteLine("Dina kontakter");
-    }
-
-    //method: add new contact
-    private void AddNewContact()
-    {
-        Console.Clear();
-        //BYT TILL KALLA PÅ ADD SERVICE
-        Console.WriteLine("Lägg till ny kontakt");
     }
 
     //method: exit the program - DONE!

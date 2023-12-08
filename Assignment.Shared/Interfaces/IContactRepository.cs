@@ -5,5 +5,6 @@ public interface IContactRepository
     bool AddContactToList(IContactModel contact);
     IEnumerable<IContactModel> GetAllContacts();
     IContactModel GetOneContact(Func<IContactModel, bool> predicate);
-    bool DeleteContact(string Email);
+    IContactModel UpdateOneCOntact(Func<IContactModel, bool> predicate);
+    bool DeleteContact(Func<IContactModel, bool> predicate);
 }
