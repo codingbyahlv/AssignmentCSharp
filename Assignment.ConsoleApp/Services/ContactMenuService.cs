@@ -5,9 +5,9 @@ using Assignment.Shared.Respository;
 
 namespace Assignment.ConsoleApp.Services;
 
-public class ContactMenuService(ContactRespository contactRepository) : IContactMenuService
+public class ContactMenuService(ContactRepository contactRepository) : IContactMenuService
 {
-    private readonly ContactRespository _contactRepository = contactRepository;
+    private readonly ContactRepository _contactRepository = contactRepository;
 
     //method: show all contacts
     public void ShowAllContacts()
@@ -63,6 +63,7 @@ public class ContactMenuService(ContactRespository contactRepository) : IContact
         else Console.WriteLine("\nNågot gick fel. Försök igen");
     }
 
+
     //method: show one contact based on firstname
     public void ShowOneContact(string input)
     {
@@ -101,6 +102,7 @@ public class ContactMenuService(ContactRespository contactRepository) : IContact
         else Console.WriteLine("\nIngen kontakt hittas");
 
     }
+
 
     //method: update contact based on current email
     public void UpdateContact(string email)

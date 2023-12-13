@@ -5,12 +5,12 @@ using Newtonsoft.Json;
 
 namespace Assignment.Shared.Respository;
 
-public class ContactRespository : IContactRepository
+public class ContactRepository : IContactRepository
 {
     //instantiate: the reusable list and fileService
     private List<IContactModel> _contactList = [];
-    private readonly FileService _fileService =  new();
-
+    private readonly FileService _fileService =  new FileService(@"c:\Work\EC\3-c-sharp\Testfolder\adressBook.json");
+    private readonly JsonSerializerSettings _jsonSettings = new() { TypeNameHandling = TypeNameHandling.All, Formatting = Formatting.Indented };
 
     //method: CREATE contact to list
     public bool AddContactToList(IContactModel contact)
@@ -19,11 +19,7 @@ public class ContactRespository : IContactRepository
         {
             _contactList.Add(contact);
             
-            string jsonContent = JsonConvert.SerializeObject(_contactList, new JsonSerializerSettings 
-            { 
-                TypeNameHandling = TypeNameHandling.All, 
-                Formatting = Formatting.Indented
-            });
+            string jsonContent = JsonConvert.SerializeObject(_contactList, _jsonSettings);
 
             bool result = _fileService.SaveContactListToFile(jsonContent);
 
@@ -43,11 +39,7 @@ public class ContactRespository : IContactRepository
 
             if (!string.IsNullOrEmpty(content))
             {
-                _contactList = JsonConvert.DeserializeObject<List<IContactModel>>(content, new JsonSerializerSettings 
-                { 
-                    TypeNameHandling = TypeNameHandling.All, 
-                    Formatting = Formatting.Indented 
-                })!;
+                _contactList = JsonConvert.DeserializeObject<List<IContactModel>>(content, _jsonSettings)!;
             }
         }
         catch (Exception ex) { Debug.WriteLine(ex.Message); }
@@ -87,11 +79,7 @@ public class ContactRespository : IContactRepository
                 contact.City = updatedContact.City;
             }
 
-            string jsonContent = JsonConvert.SerializeObject(_contactList, new JsonSerializerSettings
-            {
-                TypeNameHandling = TypeNameHandling.All,
-                Formatting = Formatting.Indented
-            });
+            string jsonContent = JsonConvert.SerializeObject(_contactList, _jsonSettings);
 
             bool result = _fileService.SaveContactListToFile(jsonContent);
 
@@ -111,11 +99,7 @@ public class ContactRespository : IContactRepository
             
             _contactList.Remove(contact);
 
-            string jsonContent = JsonConvert.SerializeObject(_contactList, new JsonSerializerSettings
-            {
-                TypeNameHandling = TypeNameHandling.All,
-                Formatting = Formatting.Indented
-            });
+            string jsonContent = JsonConvert.SerializeObject(_contactList, _jsonSettings);
 
             bool result = _fileService.SaveContactListToFile(jsonContent);
 

@@ -3,10 +3,10 @@ using Assignment.Shared.Interfaces;
 
 namespace Assignment.Shared.Services;
 
-internal class FileService() : IFileService
+internal class FileService(string filePath) : IFileService
 {
     //chooses the filepath for the file
-    private readonly string _filePath = @"c:\Work\EC\3-c-sharp\Testfolder\adressBook.json";
+    //private readonly string _filePath = @"c:\Work\EC\3-c-sharp\Testfolder\adressBook.json";
 
 
     //method: save the list in a file
@@ -14,7 +14,7 @@ internal class FileService() : IFileService
     {
         try
         {
-            using StreamWriter sw = new(_filePath);
+            using StreamWriter sw = new(filePath);
             sw.WriteLine(content);
             return true;
         }
@@ -28,9 +28,9 @@ internal class FileService() : IFileService
     {
         try
         {
-            if (File.Exists(_filePath))
+            if (File.Exists(filePath))
             {
-                using StreamReader sr = new(_filePath);
+                using StreamReader sr = new(filePath);
                 return sr.ReadToEnd();
             }
         }

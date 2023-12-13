@@ -6,7 +6,7 @@ using Microsoft.Extensions.Hosting;
 
 IHost builder = Host.CreateDefaultBuilder().ConfigureServices(services =>
 {
-    services.AddSingleton<ContactRespository>();
+    services.AddSingleton<ContactRepository>();
     services.AddSingleton<MenuService>();
     services.AddSingleton<ContactMenuService>();
 
