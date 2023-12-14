@@ -90,7 +90,7 @@ public class ContactRepository : IContactRepository
     }
 
  
-    //method: DELETE one contact - based on e-mail
+    //method: DELETE one contact
     public bool DeleteOneContact(Func<IContactModel, bool> predicate)
     {
         try
