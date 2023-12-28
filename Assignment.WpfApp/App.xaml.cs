@@ -27,6 +27,7 @@ namespace Assignment.WpfApp
                     services.AddSingleton<IContactRepository>(provider => provider.GetRequiredService<ContactRepository>());
                     services.AddSingleton<MainWindow>();
                     services.AddSingleton<MainViewModel>();
+
                     services.AddTransient<ContactAddViewModel>();
                     services.AddTransient<ContactAddView>();
                     services.AddTransient<ContactDetailsViewModel>();

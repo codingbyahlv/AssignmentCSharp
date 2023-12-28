@@ -31,7 +31,7 @@
                 <TextBox Text="{Binding NewContact.PhoneNumber}" x:Name="Input_PhoneNumber" Padding="5,10" Margin="0,0,0,10"/>
                 <TextBlock Text="E-post" FontFamily="Verdana" FontSize="12" Foreground="#585858"/>
                 <TextBox Text="{Binding NewContact.Email}" x:Name="Input_Email" Padding="5,10" Margin="0,0,0,10"/>
-                <Button Content="SPARA KONTAKT" CommandParameter="{Binding .}" Command="{Binding AddContactCommand}" Background="#34A522" BorderThickness="0" Margin="30" Padding="20,10" FontFamily="Verdana" HorizontalAlignment="Center"/>
+                <Button Content="SPARA KONTAKT" CommandParameter="{Binding .}" Command="{Binding AddContactCommand}" Background="#34A522" Foreground="#ffffff" BorderThickness="0" Margin="30" Padding="20,10" FontFamily="Verdana" HorizontalAlignment="Center"/>
             </StackPanel>
         </ScrollViewer>
     </Grid>

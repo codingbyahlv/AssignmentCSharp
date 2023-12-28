@@ -24,6 +24,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Assignment.Shared\Assignment.Shared.csproj" />
+    <ProjectReference Include="..\Assignment.WpfApp\Assignment.WpfApp.csproj" />
   </ItemGroup>
 
 </Project>

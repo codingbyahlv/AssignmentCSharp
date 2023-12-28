@@ -18,11 +18,6 @@ public class ContactService(IContactRepository contactRepository) : IContactServ
         return result;
     }
 
-    public void ShowOneContact()
-    {
-
-    }
-
     public bool UpdateContact(IContactModel updatedContact)
     {
         bool result = _contactRepository.UpdateOneContact(x => x.Equals(updatedContact.Id), updatedContact);

@@ -36,8 +36,8 @@
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
-                <Button Content="RADERA" Command="{Binding DeleteContactCommand}" CommandParameter="{Binding Contact}" Grid.Column="0" Margin="0,0,5,0" Background="#E21818" BorderThickness="0" Padding="0,10" FontFamily="Verdana" />
-                <Button Content="REDIGERA" Command="{Binding NavigateToUpdateCommand}" CommandParameter="{Binding Contact}" Grid.Column="1" Margin="5,0,0,0" Background="#34A522" BorderThickness="0" Padding="0,10" FontFamily="Verdana"/>
+                <Button Content="RADERA" Command="{Binding DeleteContactCommand}" CommandParameter="{Binding Contact}" Grid.Column="0" Margin="0,0,5,0" Background="#E21818" Foreground="#ffffff" BorderThickness="0" Padding="0,10" FontFamily="Verdana" />
+                <Button Content="REDIGERA" Command="{Binding NavigateToUpdateCommand}" CommandParameter="{Binding Contact}" Grid.Column="1" Margin="5,0,0,0" Background="#34A522" Foreground="#ffffff" BorderThickness="0" Padding="0,10" FontFamily="Verdana"/>
             </Grid>
         </StackPanel>
     </Grid>

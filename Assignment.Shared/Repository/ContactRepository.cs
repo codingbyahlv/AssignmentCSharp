@@ -12,6 +12,7 @@ public class ContactRepository : IContactRepository
     private readonly FileService _fileService =  new FileService(@"c:\Work\EC\3-c-sharp\Testfolder\adressBook.json");
     private readonly JsonSerializerSettings _jsonSettings = new() { TypeNameHandling = TypeNameHandling.All, Formatting = Formatting.Indented };
 
+
     //method: CREATE contact to list
     public bool AddContactToList(IContactModel contact)
     {
@@ -47,7 +48,7 @@ public class ContactRepository : IContactRepository
     }
 
 
-    //method: READ one contact - based on firstname
+    //method: READ one contact
     public IContactModel GetOneContact(Func<IContactModel, bool> predicate)
     {
         IContactModel contact = _contactList.FirstOrDefault(predicate)!;
@@ -61,7 +62,7 @@ public class ContactRepository : IContactRepository
     }
 
 
-    //method: UPDATE one contact - based on firstname
+    //method: UPDATE one contact
     public bool UpdateOneContact(Func<IContactModel, bool> predicate, IContactModel updatedContact)
     {
         try

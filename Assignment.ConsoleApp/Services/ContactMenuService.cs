@@ -8,6 +8,7 @@ namespace Assignment.ConsoleApp.Services;
 public class ContactMenuService(ContactRepository contactRepository) : IContactMenuService
 {
     private readonly ContactRepository _contactRepository = contactRepository;
+    private IEnumerable<IContactModel> _contacts = new List<IContactModel>();
 
     //method: show all contacts
     public void ShowAllContacts()
@@ -15,13 +16,18 @@ public class ContactMenuService(ContactRepository contactRepository) : IContactM
         Console.Clear();
         Console.WriteLine("\n---------------------------------------\n");
 
-        foreach (IContactModel contact in _contactRepository.GetAllContacts())
+        _contacts = _contactRepository.GetAllContacts();
+
+        if (_contacts.Any())
         {
-            Console.WriteLine($"{contact.FirstName} {contact.LastName}");
+            for (int i = 0; i < _contacts.Count(); i++)
+            {
+                Console.WriteLine($"[{i + 1}] {_contacts.ElementAt(i).FirstName} {_contacts.ElementAt(i).LastName}");
+            }
         }
 
         Console.WriteLine("\n---------------------------------------\n");
-        Console.Write("Skriv förnamnet på den du vill se mer om: ");
+        Console.Write("Välj kontaktens position för att se mer/redigera: ");
         string input = Console.ReadLine()!;
 
         if (input != null) ShowOneContact(input);
@@ -59,55 +65,65 @@ public class ContactMenuService(ContactRepository contactRepository) : IContactM
         };
 
         bool result = _contactRepository.AddContactToList(contact);
-        if (result) Console.WriteLine("\nKontakt tillagd");
+        if (result) 
+        { 
+            Console.WriteLine("\nKontakt tillagd!");
+            Console.WriteLine("\nTryck ENTER för att återgå till huvudmenyn...");
+        }
         else Console.WriteLine("\nNågot gick fel. Försök igen");
     }
 
 
-    //method: show one contact based on firstname
+    //method: show one contact based on index position
     public void ShowOneContact(string input)
     {
         Console.Clear();
-        IContactModel contact = _contactRepository.GetOneContact(c => c.FirstName.Equals(input, StringComparison.CurrentCultureIgnoreCase));
-        
-        if(contact != null)
+
+        if(int.TryParse(input, out int position))
         {
-
-            Console.WriteLine("\n---------------------------------------\n");
-            Console.WriteLine($"{contact.FirstName} {contact.LastName}");
-            Console.WriteLine($"{contact.Address}");
-            Console.WriteLine($"{contact.ZipCode} {contact.City}");
-            Console.WriteLine($"{contact.Email}");
-            Console.WriteLine($"{contact.PhoneNumber}");
-
-            Console.WriteLine();
-            Console.WriteLine("[U] Uppdatera kontakt");
-            Console.WriteLine("[R] Radera kontakt");
-
-            ConsoleKeyInfo key = Console.ReadKey(true);
-
-            switch (key.Key)
+            position--;
+            if(position < _contacts.Count())
             {
-                case ConsoleKey.U:
-                    UpdateContact(contact.Email);
-                    break;
-                case ConsoleKey.R:
-                    DeleteContact(contact.Email);
-                    break;
-                default:
-                    Console.WriteLine("\nfel knapp");
-                    break;
-            }
-        }
-        else Console.WriteLine("\nIngen kontakt hittas");
+                IContactModel contact = _contactRepository.GetOneContact(c => c.Id.Equals(_contacts.ElementAt(position).Id));
+                if (contact != null)
+                {
 
+                    Console.WriteLine("\n---------------------------------------\n");
+                    Console.WriteLine($"{contact.FirstName} {contact.LastName}");
+                    Console.WriteLine($"{contact.Address}");
+                    Console.WriteLine($"{contact.ZipCode} {contact.City}");
+                    Console.WriteLine($"{contact.Email}");
+                    Console.WriteLine($"{contact.PhoneNumber}");
+                    Console.WriteLine("\n---------------------------------------\n");
+                    Console.WriteLine("[U] Uppdatera kontakt");
+                    Console.WriteLine("[R] Radera kontakt");
+
+                    ConsoleKeyInfo key = Console.ReadKey(true);
+
+                    switch (key.Key)
+                    {
+                        case ConsoleKey.U:  
+                            UpdateContact(contact.Id);
+                            break;
+                        case ConsoleKey.R:
+                            DeleteContact(contact.Id);
+                            break;
+                        default:
+                            Console.WriteLine("\nFel knapp");
+                            break;
+                    }
+                }
+                else Console.WriteLine("\nIngen kontakt hittas");
+            }
+            else Console.WriteLine("\nDu har valt en felaktig siffra");
+        }
     }
 
 
-    //method: update contact based on current email
-    public void UpdateContact(string email)
+    //method: update contact based on Id
+    public void UpdateContact(Guid Id)
     {
-        Console.WriteLine("Skriv in nya uppgifter");
+        Console.WriteLine("\nSkriv in nya uppgifter");
         Console.Write("Förnamn: ");
         string FirstName = Console.ReadLine()!;
         Console.Write("Efternamn: ");
@@ -125,6 +141,7 @@ public class ContactMenuService(ContactRepository contactRepository) : IContactM
 
         IContactModel updatedContact = new ContactModel
         {
+            Id = Id,
             FirstName = FirstName,
             LastName = LastName,
             PhoneNumber = PhoneNumber,
@@ -134,17 +151,25 @@ public class ContactMenuService(ContactRepository contactRepository) : IContactM
             City = City
         };
 
-        bool result = _contactRepository.UpdateOneContact(c => c.Email.Equals(email, StringComparison.CurrentCultureIgnoreCase), updatedContact);
-        if (result) Console.WriteLine("\nListan uppdaterad");
+        bool result = _contactRepository.UpdateOneContact(c => c.Id.Equals(Id), updatedContact);
+        if (result)
+        {
+            Console.WriteLine("\nKontakten uppdaterad!");
+            Console.WriteLine("\nTryck ENTER för att återgå till huvudmenyn...");
+        }
         else Console.WriteLine("\nNågot gick fel. Försök igen");
     }
 
 
-    //method: delete contact based on current email
-    public void DeleteContact(string email)
+    //method: delete contact based on Id
+    public void DeleteContact(Guid id)
     {
-        bool result = _contactRepository.DeleteOneContact(c => c.Email.Equals(email, StringComparison.CurrentCultureIgnoreCase));
-        if (result) Console.WriteLine("\nListan uppdaterad");
+        bool result = _contactRepository.DeleteOneContact(x => x.Id.Equals(id));
+        if (result)
+        {
+            Console.WriteLine("\nKontakt raderad!");
+            Console.WriteLine("\nTryck ENTER för att återgå till huvudmenyn...");
+        }
         else Console.WriteLine("\nNågot gick fel. Försök igen");  
     }
 }
