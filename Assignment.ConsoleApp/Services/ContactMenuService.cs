@@ -10,6 +10,7 @@ public class ContactMenuService(ContactRepository contactRepository) : IContactM
     private readonly ContactRepository _contactRepository = contactRepository;
     private IEnumerable<IContactModel> _contacts = new List<IContactModel>();
 
+
     //method: show all contacts
     public void ShowAllContacts()
     {
@@ -32,7 +33,6 @@ public class ContactMenuService(ContactRepository contactRepository) : IContactM
             if (input != null) ShowOneContact(input);
         }
         else Console.WriteLine("Du saknar kontakter i din lista");
-
     }
 
 

@@ -1,8 +1,6 @@
 ﻿using Assignment.Shared.Interfaces;
 using Assignment.Shared.Models;
 using Assignment.Shared.Respository;
-using System.Net;
-using System.Reflection.Emit;
 
 namespace Assignment.Tests;
 

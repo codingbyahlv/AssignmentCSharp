@@ -1,6 +1,4 @@
-﻿using Assignment.Shared.Interfaces;
-
-namespace Assignment.ConsoleApp.Interfaces;
+﻿namespace Assignment.ConsoleApp.Interfaces;
 
 public interface IContactMenuService
 {
