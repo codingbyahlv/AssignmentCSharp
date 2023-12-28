@@ -9,8 +9,28 @@ public class ContactRepository : IContactRepository
 {
     //instantiate: the reusable list and fileService
     private List<IContactModel> _contactList = [];
-    private readonly FileService _fileService =  new FileService(@"c:\Work\EC\3-c-sharp\Testfolder\adressBook.json");
+    private readonly FileService _fileService = new FileService(Path.Combine(FindSolutionDirectory(), "adressBook.json"));
     private readonly JsonSerializerSettings _jsonSettings = new() { TypeNameHandling = TypeNameHandling.All, Formatting = Formatting.Indented };
+
+
+    //method: find the current solution filepath for the json file
+    static string FindSolutionDirectory()
+    {
+        string currentDirectory = AppDomain.CurrentDomain.BaseDirectory;
+        string? solutionDirectory = currentDirectory;
+
+        while (Directory.GetFiles(solutionDirectory, "*.sln").Length == 0)
+        {
+            solutionDirectory = Directory.GetParent(solutionDirectory)?.FullName;
+
+            if (solutionDirectory == null)
+            {
+                throw new InvalidOperationException("Solution mapp hittas inte.");
+            }
+        }
+
+        return solutionDirectory;
+    }
 
 
     //method: CREATE contact to list

@@ -5,10 +5,6 @@ namespace Assignment.Shared.Services;
 
 internal class FileService(string filePath) : IFileService
 {
-    //chooses the filepath for the file
-    //private readonly string _filePath = @"c:\Work\EC\3-c-sharp\Testfolder\adressBook.json";
-
-
     //method: save the list in a file
     public bool SaveContactListToFile(string content)
     {

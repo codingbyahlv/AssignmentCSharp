@@ -24,13 +24,15 @@ public class ContactMenuService(ContactRepository contactRepository) : IContactM
             {
                 Console.WriteLine($"[{i + 1}] {_contacts.ElementAt(i).FirstName} {_contacts.ElementAt(i).LastName}");
             }
+
+            Console.WriteLine("\n---------------------------------------\n");
+            Console.Write("Välj kontaktens position för att se mer/redigera: ");
+            string input = Console.ReadLine()!;
+
+            if (input != null) ShowOneContact(input);
         }
+        else Console.WriteLine("Du saknar kontakter i din lista");
 
-        Console.WriteLine("\n---------------------------------------\n");
-        Console.Write("Välj kontaktens position för att se mer/redigera: ");
-        string input = Console.ReadLine()!;
-
-        if (input != null) ShowOneContact(input);
     }
 
 
