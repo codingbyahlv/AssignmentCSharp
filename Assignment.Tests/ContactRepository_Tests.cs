@@ -15,6 +15,7 @@ public class ContactRepository_Tests
         //arrange
         IContactModel contact = new ContactModel
         {
+            Id = Guid.NewGuid(),
             FirstName = "Ann-Helen",
             LastName = "Lausmaa",
             PhoneNumber = "0700112233",
@@ -33,14 +34,15 @@ public class ContactRepository_Tests
     }
 
     /// <summary>
-    ///     test to see that the retrieval of contacts from the list succeeds
+    ///     test to see that the retrieval of contacts from the list is successful
     /// </summary>
     [Fact]
-    public void GetAllContacts_ShouldGetAttContactsInList_ThenReturnListOfContacts()
+    public void GetAllContacts_ShouldGetAllContactsInList_ThenReturnListOfContacts()
     {
         //arrange
         IContactModel contact = new ContactModel
         {
+            Id = Guid.NewGuid(),
             FirstName = "Ann-Helen",
             LastName = "Lausmaa",
             PhoneNumber = "0700112233",
@@ -51,6 +53,7 @@ public class ContactRepository_Tests
         };
         IContactRepository contactRepository = new ContactRepository();
         contactRepository.AddContactToList(contact);
+
         //act
         IEnumerable<IContactModel> result = contactRepository.GetAllContacts();
 
@@ -58,4 +61,36 @@ public class ContactRepository_Tests
         Assert.NotNull(result);
         Assert.True(result.Any());
     }
+
+    /// <summary>
+    ///     test to see that the retrieval of one contact from the list is successful
+    /// </summary>
+    [Fact]
+    public void GetOneContact_ShouldGetOneContactFromList_ThenReturnContact()
+    {
+        //arrange
+        IContactModel contact = new ContactModel
+        {
+            Id = Guid.NewGuid(),
+            FirstName = "Ann-Helen",
+            LastName = "Lausmaa",
+            PhoneNumber = "0700112233",
+            Email = "annhelen@mail.se",
+            Address = "Vinnargatan 1",
+            ZipCode = "12345",
+            City = "Drömstaden"
+        };
+
+        IContactRepository contactRepository = new ContactRepository();
+        contactRepository.AddContactToList(contact);
+        IEnumerable<IContactModel> _contacts = contactRepository.GetAllContacts();
+        int position = 0;
+
+        //act
+        IContactModel result = contactRepository.GetOneContact(c => c.Id.Equals(_contacts.ElementAt(position).Id)); 
+
+        //assert
+        Assert.NotNull(result);
+    }
 }
+

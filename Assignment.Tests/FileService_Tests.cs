@@ -5,6 +5,9 @@ namespace Assignment.Tests;
 
 public class FileService_Tests
 {
+    /// <summary>
+    ///     test to see if content are saved to file
+    /// </summary>
     [Fact]
     public void SaveToFile_ShouldSaveContentToFile_ThenReturnTrue()
     {
@@ -21,6 +24,10 @@ public class FileService_Tests
         Assert.True(result);
     }
 
+
+    /// <summary>
+    ///     test to see if it's possible to get content from file
+    /// </summary>
     [Fact]
     public void GetFromFile_ShouldGetContentFromFile_ThenReturnContent()
     {
