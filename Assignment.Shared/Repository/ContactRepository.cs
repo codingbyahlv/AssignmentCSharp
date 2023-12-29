@@ -7,7 +7,7 @@ namespace Assignment.Shared.Respository;
 
 public class ContactRepository : IContactRepository
 {
-    //instantiate: the reusable list and fileService
+    //instantiate: the reusable list, fileService and jsonSettings
     private List<IContactModel> _contactList = [];
     private readonly FileService _fileService = new FileService(Path.Combine(FindSolutionDirectory(), "adressBook.json"));
     private readonly JsonSerializerSettings _jsonSettings = new() { TypeNameHandling = TypeNameHandling.All, Formatting = Formatting.Indented };

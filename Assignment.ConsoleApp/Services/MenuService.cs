@@ -4,6 +4,7 @@ public class MenuService(ContactMenuService contactMenuService)
 {
     private readonly ContactMenuService _contactMenuService = contactMenuService;
 
+
     //method: the main menu of the program 
     public void ShowMainMenu()
     {
@@ -43,6 +44,7 @@ public class MenuService(ContactMenuService contactMenuService)
         } while (isMenu);
     }
 
+
     //method: exit the program
     private void ExitProgram()
     {
@@ -65,11 +67,13 @@ public class MenuService(ContactMenuService contactMenuService)
         }
     }
 
+
     //method: print a return message
     public void ReturnToMainMenu()
     {
         Console.WriteLine("\nTryck ENTER för att återgå till huvudmenyn...");
     }
+
 
     //method: print a wrong choice message
     public void ShowErrorMessage(string message)
