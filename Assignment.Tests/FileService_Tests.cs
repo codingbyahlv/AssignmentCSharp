@@ -35,6 +35,9 @@ public class FileService_Tests
         string filepath = @"c:\Work\EC\3-c-sharp\Testfolder\adressBook.txt";
         IFileService fileservice = new FileService(filepath);
 
+        string content = "Test content";
+        fileservice.SaveContactListToFile(content);
+
         //act
         string result = fileservice.GetContactListFromFile();
 
