@@ -3,7 +3,7 @@ using Assignment.Shared.Interfaces;
 
 namespace Assignment.Shared.Services;
 
-internal class FileService(string filePath) : IFileService
+public class FileService(string filePath) : IFileService
 {
     //method: save the list in a file
     public bool SaveContactListToFile(string content)

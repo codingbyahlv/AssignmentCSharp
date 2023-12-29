@@ -1,6 +1,6 @@
 ﻿namespace Assignment.Shared.Interfaces
 {
-    internal interface IFileService
+    public interface IFileService
     {
         /// <summary>
         ///     Get the contactlist from a json file
